@@ -7,6 +7,7 @@ import {
 } from "expo-image-picker";
 import { Colors } from "../../../constants/colors";
 import OutlinedButton from "../../UI/OutlinedButton";
+import React from "react";
 
 function ImagePicker() {
   const [pickedImage, setPickedImage] = useState(null);
@@ -79,6 +80,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: Colors.primary100,
     borderRadius: 4,
+    overflow: "hidden",
   },
   image: {
     width: "100%",

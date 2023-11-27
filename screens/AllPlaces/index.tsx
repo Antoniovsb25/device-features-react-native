@@ -1,7 +1,8 @@
+import React from "react";
 import PlacesList from "../../components/Places/PlacesList";
 
 function AllPlaces() {
-  return <PlacesList />
+  return <PlacesList places={undefined} />
 }
 
 export default AllPlaces;
