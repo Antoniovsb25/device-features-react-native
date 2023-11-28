@@ -1,9 +1,9 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-function PlaceItem({ place, onSelect }) {
+function PlaceItem({ place }) {
   return (
-    <TouchableOpacity onPress={onSelect}>
+    <TouchableOpacity>
       <Image source={{ uri: place.imageUri }} />
       <View>
         <Text>{place.title}</Text>
@@ -15,6 +15,4 @@ function PlaceItem({ place, onSelect }) {
 
 export default PlaceItem;
 
-const styles = StyleSheet.create({
-
-})
+const styles = StyleSheet.create({});

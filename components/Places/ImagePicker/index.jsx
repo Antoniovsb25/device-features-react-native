@@ -9,7 +9,7 @@ import { Colors } from "../../../constants/colors";
 import OutlinedButton from "../../UI/OutlinedButton";
 import React from "react";
 
-function ImagePicker() {
+function ImagePicker({ onTakeImage }) {
   const [pickedImage, setPickedImage] = useState(null);
   const [cameraPermissionInformation, requestPermission] =
     useCameraPermissions();
@@ -17,7 +17,6 @@ function ImagePicker() {
   const verifyPermissions = async () => {
     if (cameraPermissionInformation?.status === PermissionStatus.UNDETERMINED) {
       const permissionResponse = await requestPermission();
-      console.log(permissionResponse);
       return permissionResponse.granted;
     }
 
@@ -46,6 +45,7 @@ function ImagePicker() {
       quality: 0.5,
     });
     setPickedImage(image.uri);
+    onTakeImage(image.uri);
   };
 
   let imagePreview = <Text> No image taken yet.</Text>;
