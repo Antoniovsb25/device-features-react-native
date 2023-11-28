@@ -4,12 +4,18 @@ import { Colors } from "../../../constants/colors";
 import ImagePicker from "../ImagePicker";
 import LocationPicker from "../LocationPicker";
 import React from "react";
+import Button from "../../UI/Button";
 
 function PlaceForm() {
   const [title, setTitle] = useState("");
+
   const changeTitleHandler = (enteredTitle: string) => {
     setTitle(enteredTitle);
   };
+
+  const safePlaceHandler = () => {}
+
+
   return (
     <ScrollView style={styles.form}>
       <View>
@@ -22,6 +28,7 @@ function PlaceForm() {
       </View>
       <ImagePicker />
       <LocationPicker />
+      <Button onPress={safePlaceHandler}>Add Place</Button>
     </ScrollView>
   );
 }
