@@ -3,21 +3,25 @@ import MapView, { Marker } from "react-native-maps";
 import { Alert, StyleSheet, View } from "react-native";
 import IconButton from "../../components/UI/IconButton";
 
-export default function Map({ navigation }) {
-  const [selectedLocation, setSelectedLocation] = useState({
-    lat: undefined,
-    lng: undefined,
-  });
+export default function Map({ navigation, route }) {
+  const initialLocation = route.params
+    ? {
+        lat: route.params.initialLat,
+        lng: route.params.initialLng,
+      }
+    : null;
+  const [selectedLocation, setSelectedLocation] = useState(initialLocation);
+
   const region = {
-    latitude: -22.922157,
-    longitude: -43.2124111,
+    latitude: initialLocation ? initialLocation.lat : -22.922157,
+    longitude: initialLocation ? initialLocation.lng : -43.2124111,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   };
 
   const selectLocationHandler = (event) => {
     const { coordinate } = event.nativeEvent;
-
+    if (initialLocation) return;
     if (coordinate) {
       const { latitude, longitude } = coordinate;
       setSelectedLocation({
@@ -28,7 +32,7 @@ export default function Map({ navigation }) {
   };
 
   const savePickedLocationHandler = useCallback(() => {
-    if (!selectedLocation.lat || !selectedLocation.lng) {
+    if (!selectedLocation?.lat || !selectedLocation?.lng) {
       Alert.alert(
         "No location picked",
         "you have to pick a location by tapping on the map"
@@ -36,12 +40,13 @@ export default function Map({ navigation }) {
       return;
     }
     navigation.navigate("AddPlace", {
-      pickedLat: selectedLocation.lat,
-      pickedLng: selectedLocation.lng,
+      pickedLat: selectedLocation?.lat,
+      pickedLng: selectedLocation?.lng,
     });
   }, [navigation, selectedLocation]);
 
   useLayoutEffect(() => {
+    if (initialLocation) return;
     navigation.setOptions({
       headerRight: ({ tintColor }) => (
         <IconButton
@@ -52,7 +57,7 @@ export default function Map({ navigation }) {
         />
       ),
     });
-  }, [navigation, savePickedLocationHandler]);
+  }, [navigation, savePickedLocationHandler, initialLocation]);
 
   return (
     <View style={styles.container}>
@@ -61,12 +66,12 @@ export default function Map({ navigation }) {
         initialRegion={region}
         onPress={selectLocationHandler}
       >
-        {selectedLocation.lat && selectedLocation.lng ? (
+        {selectedLocation?.lat && selectedLocation?.lng ? (
           <Marker
             title="Picked Location"
             coordinate={{
-              latitude: selectedLocation.lat,
-              longitude: selectedLocation.lng,
+              latitude: selectedLocation?.lat,
+              longitude: selectedLocation?.lng,
             }}
           />
         ) : null}

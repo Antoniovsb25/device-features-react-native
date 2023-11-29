@@ -4,7 +4,10 @@ import { Colors } from "../../../constants/colors";
 
 function PlaceItem({ place, onSelect }) {
   return (
-    <TouchableOpacity onPress={onSelect} style={styles.item}>
+    <TouchableOpacity
+      onPress={onSelect.bind(this, place.id)}
+      style={styles.item}
+    >
       <Image style={styles.image} source={{ uri: place.imageUri }} />
       <View style={styles.info}>
         <Text style={styles.title}>{place.title}</Text>
